@@ -1,12 +1,15 @@
 import styles from './AgainButton.module.css';
-import { store } from "../../redux/store";
 import { resetGame } from '../../redux/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectIsGameEnded } from '../../redux/selects';
 
 export default function AgainButtonLayout() {
+    const isGameEnded = useSelector(selectIsGameEnded);
+    const dispatch = useDispatch();
     return (
         <button
-            className={`${styles.AgainButton} ${store.getState().isGameEnded ? `${styles.active}` : ""}`}
-            onClick={() => store.dispatch(resetGame())}>
+            className={`${styles.AgainButton} ${isGameEnded ? `${styles.active}` : ""}`}
+            onClick={() => dispatch(resetGame())}>
             Начать заново
         </button>
     );

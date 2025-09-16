@@ -1,10 +1,13 @@
-import { store } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import { selectField } from '../../redux/selects';
 import styles from './Field.module.css';
 
 export default function FieldLayout({ clickSquereFunc }) {
+    const field = useSelector(selectField);
+    
     return (
         <ul className={styles.fieldContainer}>
-            {store.getState().field.map((squere, index) => {
+            {field.map((squere, index) => {
                 return (
                     <li data-id={index} key={index}>
                         <button
