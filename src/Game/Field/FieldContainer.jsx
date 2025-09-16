@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { useEffect } from 'react';
 import { setCurrentPlayer, setFieldCell, setIsDraw, setIsGameEnded } from '../../redux/actions';
 import {
     selectField,
     selectIsGameEnded,
 } from '../../redux/selects';
 import FieldLayout from './FieldLayout';
+import { useEffect } from 'react';
 
 export default function Field() {
     const WIN_PATTERNS = [
@@ -43,8 +43,10 @@ export default function Field() {
     }
 
     useEffect(() => {
-        checkToResult(field);
-    }, [field]);
+        if (field.some((cell) => cell)) {
+            checkToResult(field);
+        }
+    }, [field])
 
     return (
         <FieldLayout
