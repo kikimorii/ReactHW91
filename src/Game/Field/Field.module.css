@@ -1,0 +1,14 @@
+.fieldContainer {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.fieldButton {
+    min-width: 50px;
+    min-height: 50px;
+    font-size: 25px;
+    color: #242424;
+}
