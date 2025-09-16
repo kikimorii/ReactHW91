@@ -1,6 +1,6 @@
 ```
-git clone https://github.com/kikimorii/ReactHW8.git
-cd ./ReactHW8
+git clone https://github.com/kikimorii/ReactHW91.git
+cd ./ReactHW91
 npm i
 npm run dev
 ```
