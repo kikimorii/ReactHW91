@@ -1,12 +1,21 @@
 import InformationLayout from './InformationLayout';
-import { store } from '../../redux/store';
+import { useSelector } from 'react-redux';
+import {
+    selectIsDraw,
+    selectIsGameEnded,
+    selectCurrentPlayer
+} from '../../redux/selects';
 
 export default function Information() {
-    if (store.getState().isDraw) {
+    const isDraw = useSelector(selectIsDraw);
+    const isGameEnded = useSelector(selectIsGameEnded);
+    const currentPlayer = useSelector(selectCurrentPlayer);
+    
+    if (isDraw) {
         return <InformationLayout content={'Ничья'} />
-    } else if (store.getState().isGameEnded) {
-        return <InformationLayout content={`Победил: ${store.getState().currentPlayer}`} />
+    } else if (isGameEnded) {
+        return <InformationLayout content={`Победил: ${currentPlayer}`} />
     } else {
-        return <InformationLayout content={`Ходит ${store.getState().currentPlayer}`}/>
+        return <InformationLayout content={`Ходит ${currentPlayer}`}/>
     }
 }

@@ -1,6 +1,11 @@
+import { useDispatch, useSelector } from 'react-redux';
 import { setCurrentPlayer, setFieldCell, setIsDraw, setIsGameEnded } from '../../redux/actions';
-import { store } from '../../redux/store';
+import {
+    selectField,
+    selectIsGameEnded,
+} from '../../redux/selects';
 import FieldLayout from './FieldLayout';
+import { useEffect } from 'react';
 
 export default function Field() {
     const WIN_PATTERNS = [
@@ -8,6 +13,9 @@ export default function Field() {
         [0, 3, 6], [1, 4, 7], [2, 5, 8], // Варианты побед по вертикали
         [0, 4, 8], [2, 4, 6] // Варианты побед по диагонали
     ];
+    const dispatch = useDispatch();
+    const field = useSelector(selectField);
+    const isGameEnded = useSelector(selectIsGameEnded);
 
     const checkToResult = (field) => {
         const isWin = WIN_PATTERNS.some((element) => {
@@ -16,25 +24,29 @@ export default function Field() {
         });
 
         if (!isWin) {
-            store.dispatch(setCurrentPlayer());
+            dispatch(setCurrentPlayer());
             const isDraw = field.every((element) => element);
             if (isDraw) {
-                store.dispatch(setIsDraw());
+                dispatch(setIsDraw());
             }
         } else {
-            store.dispatch(setIsGameEnded());
+            dispatch(setIsGameEnded());
         }
     }
 
     const clickToSquere = (event) => {
         const clickedButton = event.target;
         const clickedButtonID = clickedButton.parentNode.dataset.id;
-        if (!store.getState().field[clickedButtonID] && !store.getState().isGameEnded) {
-            store.dispatch(setFieldCell(clickedButtonID));
-            checkToResult(store.getState().field);
+        if (!field[clickedButtonID] && !isGameEnded) {
+            dispatch(setFieldCell(clickedButtonID));
         }
     }
 
+    useEffect(() => {
+        if (field.some((cell) => cell)) {
+            checkToResult(field);
+        }
+    }, [field])
 
     return (
         <FieldLayout

@@ -12,7 +12,7 @@ const initialState = {
 export const reducer = (state = initialState, { type, payload }) => {
     switch (type) {
         case "RESET_GAME": {
-            return initialState;
+            return { ...initialState };
         }
         case "SET_IS_DRAW": {
             return {
